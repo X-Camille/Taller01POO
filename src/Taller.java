@@ -3,24 +3,33 @@ import java.util.Random;
 
 public class Taller {
     public static void main(String[] args) {
-        String[][] matriz = crearMatrizCartas();
-        System.out.println(matriz[0][0]);
+        menu();
     }
 
     public static String[][] crearMatrizCartas() {
         String[][] matriz = new String[2][12];
-        //matriz = agregarCartas(matriz);
+        /*agregarCartas(matriz, "As", "1");
+        agregarCartas(matriz, "Dos", "2");
+        agregarCartas(matriz, "Tres", "3");
+        agregarCartas(matriz, "Cuatro", "4");
+        agregarCartas(matriz, "Cinco", "5");
+        agregarCartas(matriz, "Seis", "6");
+        agregarCartas(matriz, "Siete", "7");
+        agregarCartas(matriz, "Ocho", "8");
+        agregarCartas(matriz, "Nueve", "9");
+        agregarCartas(matriz, "Jota/Reina/Rey", "10");  */
+        matriz = agregarCartas(matriz, "As", "3");
         return matriz;
 
     }
 
     public static String[][] agregarCartas(String[][] matriz, String nombre, String numero) {
-        for (int i = 0; i < matriz.length; i++) {
+        /*for (int i = 0; i < matriz.length; i++) {
             if (matriz[i][0] == null) {
                 matriz[i][0] = nombre;
                 matriz[i][1] = numero;
             }
-        }
+        }       */
 
         matriz[0][1] = "As";
         matriz[0][2] = "Dos";
@@ -42,30 +51,60 @@ public class Taller {
         matriz[1][7] = "7";
         matriz[1][8] = "8";
         matriz[1][9] = "9";
-        matriz[1][10] = "10";
+        matriz[1][10] = "10";  
         return matriz;
       }
 
-
-      public static void inicializarCartasJuegos(){
-        
+      public static String obtenerResultados(int puntaje1, int puntaje2) {
+        if(puntaje1==20) {
+            return "El jugador 1 fue el ganador con un puntaje de 20 pts";
+        } else if(puntaje2==20) {
+            return "El jugador 2 fue el ganador con un puntaje de 20 pts";
+        } else if(puntaje1 < puntaje2 || puntaje1 > 20) {
+            return "El jugador 2 ha ganado con un puntaje de " + puntaje2 + " pts";
+        } else if(puntaje2 < puntaje1 || puntaje2 > 20) {
+            return "El jugador 1 ha ganado con un puntaje de" + puntaje1 + " pts";
+        }
+        return "Empate";
       }
 
-      public static int obtenerCartas(){
+
+      public static void inicializarCartasJuegos(String[][] matriz){
+        int puntajeJugador1 = 0;
+        int puntajeJugador2 = 0;
+
+        for(int i=0; i<3; i++) {
+             System.out.println("Jugador 1: ");
+             puntajeJugador1+=obtenerCartas(matriz);
+             System.out.println("Jugador 2: ");
+             puntajeJugador2+=obtenerCartas(matriz);
+         }
+         String resultado = obtenerResultados(puntajeJugador1, puntajeJugador2);
+         System.out.println(resultado);
+      }
+
+      public static int obtenerCartas(String[][] matriz){
         // Método que le entregará una carta aleatoria
-        Random random = new Random();
+        int indice_aleatorio = obtenerIndiceAleatorio();
+        System.out.println("Su carta es " + matriz[0][indice_aleatorio]);
+        String valor_carta = matriz[1][indice_aleatorio];
+        int valor = Integer.parseInt(valor_carta);
 
-        // Buscará un índice aleatoria para la carta con fila=1 y columna de 1 a 10
-        int columna_aleatoria = random.nextInt(11)+1;
-
-        return columna_aleatoria;
+        return valor;
       }
+
+      public static int obtenerIndiceAleatorio(){
+        Random random = new Random();
+        int indice_aleatorio = random.nextInt(10)+1;
+        return indice_aleatorio;
+      }
+
 
       public static void jugar(){
+        String[][] matriz = crearMatrizCartas();
         // Son 3 intentos por lo que se realizará un bucle for
-          for(int i=0; i<2; i++) {
-              //obtenerCartas()
-          }
+        inicializarCartasJuegos(matriz);  
+
       }
 
       public static void mostrarOpciones(){
@@ -74,22 +113,21 @@ public class Taller {
         System.out.println("Ingrese una opción: ");
       }
 
+      public static void menu() {
+          Scanner teclado = new Scanner(System.in);
+          System.out.println("Bienvenido");
+          mostrarOpciones();
+          int opcion = teclado.nextInt();
 
-      public static void menu(){
-        Scanner teclado = new Scanner(System.in);
-        System.out.println("Bienvenido");
-        mostrarOpciones();
-        int opcion = teclado.nextInt();
-
-        switch (opcion) {
-            case 1:
-                jugar();
-                break;
-            case 2:
-                break;
-            default:
-                System.out.println("Opción inválida");
-        }
-
+          while(opcion!=0) {
+              if (opcion == 1) {
+                  jugar();
+                  mostrarOpciones();
+              }
+              else{
+                  System.out.println("Opción inválida");
+                  }    
+              opcion=teclado.nextInt();
+              }
+          }
       }
-    }
