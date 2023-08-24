@@ -4,17 +4,24 @@ import java.util.Random;
 public class Taller {
     public static void main(String[] args) {
         String[][] matriz = crearMatrizCartas();
-        mostrarMatriz(matriz);
+        System.out.println(matriz[0][0]);
     }
 
     public static String[][] crearMatrizCartas() {
         String[][] matriz = new String[2][12];
-        matriz = agregarCartas(matriz);
+        //matriz = agregarCartas(matriz);
         return matriz;
 
     }
 
-    public static String[][] agregarCartas(String[][] matriz) {
+    public static String[][] agregarCartas(String[][] matriz, String nombre, String numero) {
+        for (int i = 0; i < matriz.length; i++) {
+            if (matriz[i][0] == null) {
+                matriz[i][0] = nombre;
+                matriz[i][1] = numero;
+            }
+        }
+
         matriz[0][1] = "As";
         matriz[0][2] = "Dos";
         matriz[0][3] = "Tres";
@@ -39,13 +46,50 @@ public class Taller {
         return matriz;
       }
 
-      public static void mostrarMatriz(String[][] matriz){
-        for(int i=0; i < 2; i++) {
-            for (int j = 0; j < 12; j++) {
-                System.out.println(matriz[i][j] + " ,");
-            }
-            System.out.println();
-        }
+
+      public static void inicializarCartasJuegos(){
+        
       }
 
+      public static int obtenerCartas(){
+        // Método que le entregará una carta aleatoria
+        Random random = new Random();
+
+        // Buscará un índice aleatoria para la carta con fila=1 y columna de 1 a 10
+        int columna_aleatoria = random.nextInt(11)+1;
+
+        return columna_aleatoria;
+      }
+
+      public static void jugar(){
+        // Son 3 intentos por lo que se realizará un bucle for
+          for(int i=0; i<2; i++) {
+              //obtenerCartas()
+          }
+      }
+
+      public static void mostrarOpciones(){
+        System.out.println("1. Jugar");
+        System.out.println("2. Salir");
+        System.out.println("Ingrese una opción: ");
+      }
+
+
+      public static void menu(){
+        Scanner teclado = new Scanner(System.in);
+        System.out.println("Bienvenido");
+        mostrarOpciones();
+        int opcion = teclado.nextInt();
+
+        switch (opcion) {
+            case 1:
+                jugar();
+                break;
+            case 2:
+                break;
+            default:
+                System.out.println("Opción inválida");
+        }
+
+      }
     }
