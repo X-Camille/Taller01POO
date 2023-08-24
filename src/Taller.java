@@ -30,7 +30,6 @@ public class Taller {
                 matriz[i][1] = numero;
             }
         }       */
-
         matriz[0][1] = "As";
         matriz[0][2] = "Dos";
         matriz[0][3] = "Tres";
